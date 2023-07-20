@@ -4,7 +4,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import { useTheme } from '@shared/ui/theme/AppTheme';
 
 export default function BaseSelectPickerInput(
-        props: BaseSelectPickerInputProps
+    props: BaseSelectPickerInputProps
 ) {
     const {
         value,
@@ -55,34 +55,35 @@ export default function BaseSelectPickerInput(
     const theme = useTheme();
 
     return (
-            <Autocomplete
-                    multiple={props.multiple ?? false}
-                    placeholder={props.placeholder}
-                    value={orderValues ? orderValues(selectedItems) : selectedItems}
-                    onChange={onConfirm}
-                    disableClearable={!props.canClear}
-                    options={choices}
-                    getOptionSelected={(option, value) => {
-                        return option[finalOptionValue] === value?.[finalOptionValue];
-                    }}
-                    getOptionLabel={(option) => option[finalOptionText]}
-                    disabled={props.disabled}
-                    renderInput={(params) => <TextField {...params}
-                            placeholder={props.placeholder}
-                            InputProps={{
-                                ...params.InputProps,
-                                style: {
-                                    paddingTop: 0,
-                                    paddingBottom: 0
-                                }
-                            }}
-                            fullWidth
-                            style={{
-                                borderRadius: 20
-                            }}
-                    />}
+        <Autocomplete
+            loading={props.loading}
+            multiple={props.multiple ?? false}
+            placeholder={props.placeholder}
+            value={orderValues ? orderValues(selectedItems) : selectedItems}
+            onChange={onConfirm}
+            disableClearable={!props.canClear}
+            options={choices}
+            getOptionSelected={(option, value) => {
+                return option[finalOptionValue] === value?.[finalOptionValue];
+            }}
+            getOptionLabel={(option) => option[finalOptionText]}
+            disabled={props.disabled}
+            renderInput={(params) => <TextField {...params}
+                                                placeholder={props.placeholder}
+                                                InputProps={{
+                                                    ...params.InputProps,
+                                                    style: {
+                                                        paddingTop: 0,
+                                                        paddingBottom: 0
+                                                    }
+                                                }}
+                                                fullWidth
+                                                style={{
+                                                    borderRadius: 20
+                                                }}
+            />}
 
-            />
+        />
     );
 
 }

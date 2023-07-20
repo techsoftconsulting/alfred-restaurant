@@ -5,6 +5,7 @@ import ReservationRepository from '@modules/reservations/domain/respositories/re
 import Reservation from '@modules/reservations/domain/models/reservation';
 import ReservationMapper from '@modules/reservations/infrastructure/mappers/reservation-mapper';
 import APIRepository from '@shared/infrastructure/api/api-repository';
+import RestaurantAvailability from '@modules/reservations/domain/models/restaurant-availability';
 
 const COLLECTION_NAME = 'reservation';
 
@@ -44,7 +45,10 @@ export default class ApiReservationRepository extends APIRepository implements R
             });
         }
 
-        const docs: any = await this.findByCriteriaRequest(COLLECTION_NAME, initialFilters, pagination, undefined, true);
+        const docs: any = await this.findByCriteriaRequest(COLLECTION_NAME, initialFilters, pagination, {
+            field: 'date',
+            order: 'desc'
+        }, true);
 
         return ReservationMapper.toDomainFromArray(docs);
     }
@@ -68,5 +72,17 @@ export default class ApiReservationRepository extends APIRepository implements R
     async createReservation(item: Reservation): Promise<any> {
         const data = ReservationMapper.toPersistence(item);
         return this.create(COLLECTION_NAME, data, true);
+    }
+
+    async getAvailability(id: string, date: string): Promise<RestaurantAvailability> {
+        const doc: any = await this.get(`${COLLECTION_NAME}/availability/${id}/${date}`, true);
+
+        if (!doc) return {
+            tables: []
+        };
+
+        return {
+            tables: doc
+        };
     }
 }

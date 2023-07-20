@@ -15,6 +15,7 @@ export default class ReservationMapper {
             numberOfPeople: item.numberOfPeople,
             table: item.table,
             status: item.status,
+            canceled: item.cancelled,
             checkedIn: item.checkedIn ?? false,
             checkedInAt: item.checkedInAt ? new Date(item.checkedIn) : undefined
         });

@@ -1,4 +1,5 @@
 import ObjectUtils from '@utils/misc/object-utils';
+import DateTimeUtils from '@utils/misc/datetime-utils';
 
 interface ReservationClient {
     id: string;
@@ -39,6 +40,7 @@ export interface ReservationProps {
     numberOfPeople: number;
     checkedIn: boolean;
     checkedInAt?: Date
+    canceled?: boolean
 }
 
 export interface ReservationPrimitiveProps extends ReservationProps {
@@ -81,6 +83,20 @@ export default class Reservation {
 
     get hour() {
         return this.props.hour;
+    }
+    
+    get table() {
+        return this.props.table;
+    }
+
+    get canceled() {
+        return this.props.canceled;
+    }
+
+    get canCancel() {
+        if (this.props.canceled) return false;
+        if (this.props.checkedIn) return false;
+        return !DateTimeUtils.isPast(DateTimeUtils.fromTime(this.props.date, 'YYYY-MM-DD'));
     }
 
     get hasClient() {

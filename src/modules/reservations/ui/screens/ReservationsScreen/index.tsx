@@ -436,8 +436,8 @@ function ItemsList({
                                                     <TableCell>
                                                         <Text
                                                                 bold
-                                                                color={c.isCheckedIn ? 'appSuccess' : 'warningMain'}
-                                                        >{c.isCheckedIn ? 'Asistido' : 'En espera'}</Text>
+                                                                color={c.canceled ? 'dangerMain' : c.isCheckedIn ? 'appSuccess' : 'warningMain'}
+                                                        >{c.canceled ? 'Cancelado' : c.isCheckedIn ? 'Asistido' : 'En espera'}</Text>
                                                     </TableCell>
                                                     <TableCell>
                                                         <RowOptions
@@ -490,14 +490,19 @@ function RowOptions({ entity, onEdit, onDelete, onCheck }: { onCheck: any; entit
                         iconColor={'greyDark'}
                         iconName={'edit'}
                 />
-                <IconButton
-                        onPress={() => {
-                            onDelete();
-                        }}
-                        iconType={'feather'}
-                        iconColor={'greyDark'}
-                        iconName={'trash'}
-                />
+                {
+                        !entity?.canceled && (
+                                <IconButton
+                                        onPress={() => {
+                                            onDelete();
+                                        }}
+                                        iconType={'feather'}
+                                        iconColor={'greyDark'}
+                                        iconName={'trash'}
+                                />
+                        )
+                }
+
 
                 {
                         !entity!.isCheckedIn && (
