@@ -1,7 +1,7 @@
 import SaveButton from '@main-components/Form/components/SaveButton';
 import useLoginWithEmailAndPassword from '@modules/auth/application/use-login-with-email-and-password';
 import { email, required } from '@shared/domain/form/validate';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '@shared/ui/theme/AppTheme';
 import { Form } from '@main-components/Form/Form';
 import PasswordInput from '@main-components/Form/inputs/PasswordInput';
@@ -12,6 +12,8 @@ import useParams from '@shared/domain/hooks/navigation/use-params';
 import useGetRestaurantBySlug from '@modules/user/application/use-get-restaurant-by-slug';
 import { Image } from '@main-components/Base/Image';
 import TextInput from '@main-components/Form/inputs/TextInput';
+import { Button } from '@main-components/Base/Button';
+import ForgotPasswordModal from '@modules/auth/ui/screens/EmailLogin/ForgotPasswordModal';
 
 export default function EmailLogin() {
     const theme = useTheme();
@@ -22,25 +24,27 @@ export default function EmailLogin() {
         enabled: !!restaurantId
     });
     const foundId = restaurant?.id;
+    const [showForgotPassword, setShowForgotPassword] = useState(false);
 
-    if (loading) return <Box></Box>
+    if (loading) return <Box></Box>;
 
     return (
             <Box
-                    bg={'white'}
                     flex={1}
                     justifyContent={'center'}
+                    style={{
+                        backgroundImage: `linear-gradient(${theme.colors.contrastMain},${theme.colors.contrastLight}) `
+                    }}
             >
                 <Box
                         flex={0}
-                        bg='greyLight'
+                        bg={'white'}
                         paddingVertical={'xl'}
                         width={'100%'}
                         borderRadius={20}
                         maxWidth={400}
                         style={{
-                            minHeight: 'fit-content',
-                            backgroundImage: `linear-gradient(${theme.colors.contrastMain},${theme.colors.contrastLight}) `
+                            minHeight: 'fit-content'
                         }}
                         p={'m'}
                         margin={'m'}
@@ -80,10 +84,8 @@ export default function EmailLogin() {
                                 !foundId && (
                                         <Box mt={'m'}>
                                             <TextInput
-                                                    errorColor={'white'}
                                                     label={'Código de restaurante'}
                                                     source={'slug'}
-                                                    bg={'white'}
                                                     required
                                                     validate={[
                                                         required('Escribe el código del restaurante')
@@ -95,12 +97,10 @@ export default function EmailLogin() {
                         }
                         <EmailTextInput
                                 source='email'
-                                errorColor={'white'}
                                 mode='rounded'
                                 required
                                 label='Correo electrónico'
                                 placeholder='Ej. myemail@domain.com'
-                                bg={'white'}
                                 validate={[
                                     required('Escribe tu correo electrónico'),
                                     email('Correo inválido')
@@ -108,13 +108,10 @@ export default function EmailLogin() {
                                 filterText={(text) => {
                                     return text?.replace(/ /g, '');
                                 }}
-                                autoFocus={true}
                         />
 
                         <PasswordInput
                                 source='password'
-                                errorColor={'white'}
-                                bg={'white'}
                                 required
                                 placeholder='Escribe tu contraseña'
                                 validate={required()}
@@ -122,24 +119,38 @@ export default function EmailLogin() {
                                 label='Contraseña'
                         />
 
-                        {/*      <Box
-                                mb='s'
+                        <Box
+                                mb='m'
                                 mt='s'
                                 alignItems={'center'}
                         >
                             <Button
                                     mode='text'
-                                    errorColor={'white'}
                                     uppercase={false}
                                     titleColor='primaryMain'
                                     onPress={() => {
-                                        navigate('forgot-password');
+                                        setShowForgotPassword(true);
                                     }}
-                                    title='¿Olvidaste tu contraseña?'
+                                    title='Olvidé mi contraseña'
                             />
-                        </Box>*/}
+                        </Box>
                     </Form>
                 </Box>
+                <Box
+                        alignItems={'center'}
+                        mt={'m'}
+                >
+                    <Text color={'white'}>powered by Alfred©</Text>
+                </Box>
+
+                <ForgotPasswordModal
+                        modal={{
+                            visible: showForgotPassword,
+                            onDismiss() {
+                                setShowForgotPassword(false);
+                            }
+                        }}
+                />
             </Box>
     );
 }

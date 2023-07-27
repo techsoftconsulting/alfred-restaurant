@@ -4,7 +4,7 @@ import useGetIdentity from '@modules/auth/application/use-get-identity';
 export const permissionsConstantsDescriptions = [
     {
         id: 'ADMIN', name: 'Administrador',
-        menu: ['TABLES', 'RESERVATIONS', 'SETTINGS', 'CLIENTS', 'USERS', 'MENU', 'PROMOTIONS']
+        menu: ['TABLES', 'RESERVATIONS', 'SETTINGS', 'ACCOUNT', 'CLIENTS', 'USERS', 'MENU', 'PROMOTIONS']
     },
     {
         id: 'ADM.RESERV',

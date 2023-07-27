@@ -99,7 +99,7 @@ const MENU_MAP = {
                         options={{
                             drawerIcon: (props: any) => (
                                     <Icon
-                                            name={'user-cog'}
+                                            name={'users'}
                                             type={'font-awesome-5'}
                                             color={props.color ?? 'white'}
                                             numberSize={20}
@@ -157,13 +157,13 @@ const MENU_MAP = {
                         options={{
                             drawerIcon: (props: any) => (
                                     <Icon
-                                            name={'cog'}
-                                            type={'font-awesome'}
+                                            name={'user-cog'}
+                                            type={'font-awesome-5'}
                                             color={props.color ?? 'white'}
                                             numberSize={20}
                                     />
                             ),
-                            title: 'Ajustes',
+                            title: 'Cuenta',
                             headerTitle: '',
                             headerShown: false
                         }}

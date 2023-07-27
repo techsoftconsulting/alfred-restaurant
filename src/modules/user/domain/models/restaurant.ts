@@ -4,13 +4,13 @@ export interface RestaurantProps {
     id: string;
     name: string;
     logoUrl: string;
-    coverImageUrl: string;
-    categoriesIds: string;
-    notificationEmail?: string;
-    description: string;
-    schedule: any;
-    mallId: string;
     type: string;
+    coverImageUrl: string;
+    categoriesIds?: string[];
+    notificationEmail?: string;
+    description?: string;
+    schedule?: any;
+    mallId?: string;
 }
 
 export interface RestaurantPrimitiveProps extends RestaurantProps {

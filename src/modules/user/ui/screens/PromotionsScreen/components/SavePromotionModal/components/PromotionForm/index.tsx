@@ -19,6 +19,8 @@ import useSavePromotion from '@modules/user/application/promotions/use-save-prom
 import MallsSelectInput
     from '@modules/user/ui/screens/PromotionsScreen/components/SavePromotionModal/components/PromotionForm/components/MallsSelectInput';
 import useGetIdentity from '@modules/auth/application/use-get-identity';
+import PromotionPreview
+    from '@modules/user/ui/screens/PromotionsScreen/components/SavePromotionModal/components/PromotionForm/components/PromotionPreview';
 
 interface PromotionFormProps {
     id?: string;
@@ -116,6 +118,8 @@ export default function PromotionForm(props: PromotionFormProps) {
                                 label={'Imagen'}
                                 helperText={'Aspecto 2:1. Min: 800px x 400px'}
                         />
+
+                        <PromotionPreview />
                     </Box>
                 </Box>
 

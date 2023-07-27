@@ -8,11 +8,10 @@ import {
     RestaurantCoverImageInput
 } from '@modules/user/ui/screens/SettingsScreen/components/RestaurantCoverImageInput';
 import TextInput from '@main-components/Form/inputs/TextInput';
-import { email, minLength, required } from '@shared/domain/form/validate';
+import { email, required } from '@shared/domain/form/validate';
 import RestaurantCategorySelectInput
     from '@modules/user/ui/screens/SettingsScreen/components/RestaurantCategorySelectInput';
-import WeekScheduleInput, { isValidSchedule } from '@main-components/Form/inputs/WeekScheduleInput';
-import PasswordInput from '@main-components/Form/inputs/PasswordInput';
+import WeekScheduleInput from '@main-components/Form/inputs/WeekScheduleInput';
 import React from 'react';
 import useNotify from '@shared/domain/hooks/use-notify';
 import useUpdateRestaurant from '@modules/user/application/use-update-restaurant';
@@ -32,105 +31,92 @@ export function GeneralSettings() {
     const dto = restaurant?.toPrimitives();
 
     return (
-        <Box flexDirection={'row'}>
-            <Box
-                maxWidth={700}
-                width={'100%'}
-            >
-                <Form
-                    toolbar={
-                        <FormToolbar
-                            restaurant={restaurant}
-                            currentUser={currentUser}
-                        />
-                    }
-                    defaultValues={{
-                        schedule: dto?.schedule,
-                        description: dto?.description,
-                        name: restaurant?.name,
-                        categoriesIds: restaurant?.categoriesIds,
-                        notificationEmail: restaurant?.notificationEmail,
-                        logoUrl: restaurant?.logoUrl,
-                        coverImageUrl: restaurant?.coverImageUrl,
-                        credentials: {
-                            password: undefined
-                        },
-                        mallId: restaurant?.mallId
-                    }}
+            <Box flexDirection={'row'}>
+                <Box
+                        maxWidth={700}
+                        width={'100%'}
                 >
-                    <Box
-                        alignItems={'center'}
-                        justifyContent={'space-between'}
-                        flexDirection={'row'}
+                    <Form
+                            toolbar={
+                                <FormToolbar
+                                        restaurant={restaurant}
+                                        currentUser={currentUser}
+                                />
+                            }
+                            defaultValues={{
+                                schedule: dto?.schedule,
+                                description: dto?.description,
+                                name: restaurant?.name,
+                                categoriesIds: restaurant?.categoriesIds,
+                                notificationEmail: restaurant?.notificationEmail,
+                                logoUrl: restaurant?.logoUrl,
+                                coverImageUrl: restaurant?.coverImageUrl,
+                                credentials: {
+                                    password: undefined
+                                },
+                                mallId: restaurant?.mallId
+                            }}
                     >
-                        <RestaurantLogoInput
-                            label={'Logo'}
-                            helperText={'Aspecto 1:1. Min: 250px x 250px'}
+                        <Box
+                                alignItems={'center'}
+                                justifyContent={'space-between'}
+                                flexDirection={'row'}
+                        >
+                            <RestaurantLogoInput
+                                    label={'Logo'}
+                                    helperText={'Aspecto 1:1. Min: 250px x 250px'}
+                            />
+
+                            <RestaurantCoverImageInput
+                                    label={'Cover'}
+                                    helperText={'Aspecto 2:1. Min: 800px x 400px'}
+                            />
+                        </Box>
+
+                        <TextInput
+                                required
+                                validate={[
+                                    required()
+                                ]}
+                                label={'Nombre del negocio'}
+                                source={'name'}
                         />
 
-                        <RestaurantCoverImageInput
-                            label={'Cover'}
-                            helperText={'Aspecto 2:1. Min: 800px x 400px'}
+
+                        <RestaurantMallSelectInput
+                                source={'mallId'}
+                                placeholder={'Plaza'}
+                                disabled
+                                label={'Plaza'}
+                                required
                         />
-                    </Box>
 
-                    <TextInput
-                        required
-                        validate={[
-                            required()
-                        ]}
-                        label={'Nombre del negocio'}
-                        source={'name'}
-                    />
+                        <TextInput
+                                multiline
+                                label={'Descripción'}
+                                source={'description'}
+                        />
 
-                    <TextInput
-                        multiline
-                        required
-                        validate={required()}
-                        label={'Descripción'}
-                        source={'description'}
-                    />
+                        <RestaurantCategorySelectInput
+                                label={'Categorías del restaurante'}
+                                source={'categoriesIds'}
+                        />
+                        <TextInput
+                                validate={[
+                                    email()
+                                ]}
+                                label={'Correo de notificación'}
+                                source={'notificationEmail'}
+                        />
 
-                    <RestaurantMallSelectInput
-                        source={'mallId'}
-                        placeholder={'Plaza'}
-                        disabled
-                        label={'Plaza'}
-                        required
-                    />
+                        <WeekScheduleInput
+                                source={'schedule'}
+                                label={'Disponibilidad'}
+                        />
 
-                    <RestaurantCategorySelectInput
-                        required
-                        validate={required()}
-                        label={'Categorías del restaurante'}
-                        source={'categoriesIds'}
-                    />
-                    <TextInput
-                        validate={[
-                            email()
-                        ]}
-                        label={'Correo de notificación'}
-                        source={'notificationEmail'}
-                    />
-
-                    <WeekScheduleInput
-                        source={'schedule'}
-                        label={'Disponibilidad'}
-                        required
-                        validate={isValidSchedule('Horario inválido')}
-                    />
-
-                    <PasswordInput
-                        label={'Cambiar contraseña'}
-                        source={'credentials.password'}
-                        validate={[
-                            minLength(8, 'Por favor, ingresa una clave de al menos 8 caracteres')
-                        ]}
-                    />
-
-                </Form>
+                    </Form>
+                </Box>
             </Box>
-        </Box>
     );
 }
 
@@ -143,48 +129,48 @@ function FormToolbar(props) {
 
     const { logout } = useLogout();
     return (
-        <Box alignItems={'center'}>
-            <SaveButton
-                {...props}
-                label='Guardar'
-                titleColor={'white'}
-                loading={loading}
-                backgroundColor={'primaryMain'}
-                uppercase={false}
-                icon={() => {
-                    return <AppIcon
-                        name='save'
-                        size={20}
-                        color='white'
-                    />;
-                }}
-                onSubmit={async (data) => {
+            <Box alignItems={'center'}>
+                <SaveButton
+                        {...props}
+                        label='Guardar'
+                        titleColor={'white'}
+                        loading={loading}
+                        backgroundColor={'primaryMain'}
+                        uppercase={false}
+                        icon={() => {
+                            return <AppIcon
+                                    name='save'
+                                    size={20}
+                                    color='white'
+                            />;
+                        }}
+                        onSubmit={async (data) => {
 
-                    if (!props.restaurant) return;
-                    if (!props.currentUser) return;
+                            if (!props.restaurant) return;
+                            if (!props.currentUser) return;
 
-                    const restaurant: Restaurant = props.restaurant;
-                    const currentUser: AccountUser = props.currentUser;
+                            const restaurant: Restaurant = props.restaurant;
+                            const currentUser: AccountUser = props.currentUser;
 
 
-                    restaurant.updateProfile(ObjectUtils.omit(data, ['credentials']));
+                            restaurant.updateProfile(ObjectUtils.omit(data, ['credentials']));
 
-                    await updateRestaurant(props.restaurant.id, props.restaurant);
+                            await updateRestaurant(props.restaurant.id, props.restaurant);
 
-                    const changedCredentials = !!data.credentials && (!!data.credentials.email || !!data.credentials.password);
-                    if (changedCredentials) {
-                        currentUser.updateCredentials(data.credentials);
-                        await saveUser(currentUser);
-                        notify('Datos actualizados. Tu clave a cambiado, por favor inicia sesión nuevamente', 'success');
-                        await logout();
-                        return;
-                    }
+                            const changedCredentials = !!data.credentials && (!!data.credentials.email || !!data.credentials.password);
+                            if (changedCredentials) {
+                                currentUser.updateCredentials(data.credentials);
+                                await saveUser(currentUser);
+                                notify('Datos actualizados. Tu clave a cambiado, por favor inicia sesión nuevamente', 'success');
+                                await logout();
+                                return;
+                            }
 
-                    props?.onSave?.();
+                            props?.onSave?.();
 
-                    notify('Guardado exitosamente', 'success');
-                }}
-            />
-        </Box>
+                            notify('Guardado exitosamente', 'success');
+                        }}
+                />
+            </Box>
     );
 }

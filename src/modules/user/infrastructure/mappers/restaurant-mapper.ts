@@ -40,21 +40,21 @@ export default class RestaurantMapper {
 
     static toPersistence(item: Restaurant) {
         const data = item.toPrimitives();
-        return ObjectUtils.omitUnknown({
+        return {
             id: data.id,
             name: data.name,
             logoUrl: data.logoUrl,
             coverImageUrl: data.coverImageUrl,
             categoriesIds: data.categoriesIds,
             description: data.description,
-            schedule: ObjectUtils.omitUnknown(Object.keys(data.schedule).reduce((acc, id) => {
+            schedule: data.schedule ? ObjectUtils.omitUnknown(Object.keys(data.schedule).reduce((acc, id) => {
                 return {
                     ...acc,
                     [id]: ObjectUtils.omitUnknown(data.schedule[id])
                 };
-            }, {})),
+            }, {})) : undefined,
             notificationEmail: data.notificationEmail,
             address: data.mallId
-        });
+        };
     }
 }
