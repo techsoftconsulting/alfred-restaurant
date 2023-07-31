@@ -96,7 +96,7 @@ function PromoItem({ item, restaurant, direction }) {
                                     <Image
                                             resizeMode={'cover'}
                                             style={{
-                                                borderRadius: 20,
+                                                borderRadius: 18,
                                                 aspectRatio: 1 / 1
                                             }}
                                             source={{

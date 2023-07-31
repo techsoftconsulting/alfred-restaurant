@@ -39,121 +39,121 @@ export default function TableForm(props: TableFormProps) {
     const table = props.table;
 
     return (
-        <Form
-            defaultValues={{
-                ...props.defaultValues,
-                ...table?.toPrimitives(),
-                areaId: props?.item?.areaId
-            }}
-            toolbar={
-                <FormToolbar
-                    id={props?.item?.id}
-                    areas={props.areas ?? []}
-                    areaId={props?.item?.areaId}
-                    onSave={props.onSave}
-                />
-            }
-        >
-            <Box flexDirection={'row'}>
-                <Box
-                    mr={'m'}
-                    flex={0.5}
-                >
-                    <TextInput
-                        required
-                        validate={[
-                            required(),
-                            minValue(1, 'Mínimo 1 persona')
-                        ]}
-                        filterText={onlyNumbers}
-                        label={'Número de personas'}
-                        source={'capacity'}
-                    />
-                </Box>
-
-                <Box flex={0.5}>
-                    <BaseInput
-                        WrapperComponent={Box}
-                        label={'Duración de reserva'}
-                        bg={'white'}
-                        required
+            <Form
+                    defaultValues={{
+                        ...props.defaultValues,
+                        ...table?.toPrimitives(),
+                        areaId: props?.item?.areaId
+                    }}
+                    toolbar={
+                        <FormToolbar
+                                id={props?.item?.id}
+                                areas={props.areas ?? []}
+                                areaId={props?.item?.areaId}
+                                onSave={props.onSave}
+                        />
+                    }
+            >
+                <Box flexDirection={'row'}>
+                    <Box
+                            mr={'m'}
+                            flex={0.5}
                     >
-                        <Box
-                            flexDirection={'row'}
+                        <TextInput
+                                required
+                                validate={[
+                                    required(),
+                                    minValue(1, 'Mínimo 1 persona')
+                                ]}
+                                filterText={onlyNumbers}
+                                label={'Número de personas'}
+                                source={'capacity'}
+                        />
+                    </Box>
+
+                    <Box flex={0.5}>
+                        <BaseInput
+                                WrapperComponent={Box}
+                                label={'Duración de reserva'}
+                                bg={'white'}
+                                required
                         >
                             <Box
-                                mr={'m'}
-                                flex={0.5}
+                                    flexDirection={'row'}
                             >
-                                <TextInput
-                                    noMargin
-                                    required
-                                    placeholder={'Horas'}
-                                    filterText={onlyNumbers}
-                                    validate={required()}
-                                    source={'reservationDuration.hours'}
-                                />
-                            </Box>
-                            <Box flex={0.5}>
-                                <TextInput
-                                    noMargin
-                                    required
-                                    placeholder={'Minutos'}
-                                    filterText={onlyNumbers}
-                                    validate={required()}
-                                    source={'reservationDuration.minutes'}
-                                />
-                            </Box>
-                        </Box>
-                    </BaseInput>
-
-                </Box>
-            </Box>
-
-
-            <WeekScheduleInput
-                header={() => {
-                    return (
-                        <TableSchedulePicker
-                            source={'templateSchedule'}
-
-                            helperText={<Box
-                                flexDirection={'row'}
-                                justifyContent={'center'}
-                                alignItems={'center'}
-                            >
-                                <Text variant={'small'}>Selecciona un horario predefinido</Text>
-                                <Box ml={'s'}>
-                                    <Link
-                                        label={'Ver configuraciones'}
-                                        href={'/settings'}
-                                        target={'_blank'}
-                                        textProps={{
-                                            variant: 'small',
-                                            color: 'infoMain'
-                                        }}
+                                <Box
+                                        mr={'m'}
+                                        flex={0.5}
+                                >
+                                    <TextInput
+                                            noMargin
+                                            required
+                                            placeholder={'Horas'}
+                                            filterText={onlyNumbers}
+                                            validate={required()}
+                                            source={'reservationDuration.hours'}
                                     />
                                 </Box>
-                            </Box>}
-                        />
-                    );
-                }}
-                source={'schedule'}
-                label={'Disponibilidad'}
-                required
-                validate={isValidSchedule('Horario inválido')}
-            />
+                                <Box flex={0.5}>
+                                    <TextInput
+                                            noMargin
+                                            required
+                                            placeholder={'Minutos'}
+                                            filterText={onlyNumbers}
+                                            validate={required()}
+                                            source={'reservationDuration.minutes'}
+                                    />
+                                </Box>
+                            </Box>
+                        </BaseInput>
 
-            <RestaurantAreaSelectInput
-                required
-                validate={[
-                    required()
-                ]}
-                label={'Area'}
-                source={'areaId'}
-            />
+                    </Box>
+                </Box>
 
-        </Form>
+
+                <WeekScheduleInput
+                        header={() => {
+                            return (
+                                    <TableSchedulePicker
+                                            source={'templateSchedule'}
+
+                                            helperText={<Box
+                                                    flexDirection={'row'}
+                                                    justifyContent={'center'}
+                                                    alignItems={'center'}
+                                            >
+                                                <Text variant={'small'}>Selecciona un horario predefinido</Text>
+                                                <Box ml={'s'}>
+                                                    <Link
+                                                            label={'Ver configuraciones'}
+                                                            href={'/settings'}
+                                                            target={'_blank'}
+                                                            textProps={{
+                                                                variant: 'small',
+                                                                color: 'infoMain'
+                                                            }}
+                                                    />
+                                                </Box>
+                                            </Box>}
+                                    />
+                            );
+                        }}
+                        source={'schedule'}
+                        label={'Disponibilidad'}
+                        required
+                        validate={isValidSchedule('Horario inválido')}
+                />
+
+                <RestaurantAreaSelectInput
+                        required
+                        validate={[
+                            required()
+                        ]}
+                        label={'Area'}
+                        source={'areaId'}
+                />
+
+            </Form>
     );
 }
 
@@ -161,17 +161,17 @@ function RestaurantAreaSelectInput(props) {
     const { data: areas, ids, loading: loadingAreas } = useFindRestaurantAreas();
 
     return (
-        <SelectInput
-            {...props}
+            <SelectInput
+                    {...props}
 
-            choices={ids?.map(id => {
-                const area = areas?.[id];
-                return {
-                    id: id,
-                    name: area?.name
-                };
-            })}
-        />
+                    choices={ids?.map(id => {
+                        const area = areas?.[id];
+                        return {
+                            id: id,
+                            name: area?.name
+                        };
+                    })}
+            />
 
     );
 }
@@ -181,27 +181,27 @@ function TableSchedulePicker(props) {
 
     const { setValue } = useForm();
     return (
-        <SelectInput
-            {...props}
-            placeholder={'Selecciona un horario base'}
-            choices={ids?.map(id => {
-                const item = items?.[id];
-                return {
-                    id: id,
-                    name: item?.name
-                };
-            })}
-            onChange={(id) => {
-                if (!id) {
-                    setValue('schedule', '');
+            <SelectInput
+                    {...props}
+                    placeholder={'Selecciona un horario base'}
+                    choices={ids?.map(id => {
+                        const item = items?.[id];
+                        return {
+                            id: id,
+                            name: item?.name
+                        };
+                    })}
+                    onChange={(id) => {
+                        if (!id) {
+                            setValue('schedule', '');
 
-                    return;
-                }
-                if (!items) return;
-                const selectedSchedule = items[id].schedule;
-                setValue('schedule', selectedSchedule);
-            }}
-        />
+                            return;
+                        }
+                        if (!items) return;
+                        const selectedSchedule = items[id].schedule;
+                        setValue('schedule', selectedSchedule);
+                    }}
+            />
     );
 }
 
@@ -213,97 +213,99 @@ function FormToolbar(props) {
     const [updatingIndicator, setUpdatingIndicator] = useState(false);
 
     return (
-        <Box alignItems={'center'}>
-            <SaveButton
-                {...props}
-                label='Guardar'
-                titleColor={'white'}
-                loading={updating && updatingIndicator}
-                backgroundColor={'primaryMain'}
-                uppercase={false}
-                icon={() => {
-                    return <AppIcon
-                        name='save'
-                        size={20}
-                        color='white'
-                    />;
-                }}
-                onSubmit={async (data) => {
+            <Box alignItems={'center'}>
+                <SaveButton
+                        {...props}
+                        label='Guardar'
+                        titleColor={'white'}
+                        loading={updating && updatingIndicator}
+                        backgroundColor={'primaryMain'}
+                        uppercase={false}
+                        icon={() => {
+                            return <AppIcon
+                                    name='save'
+                                    size={20}
+                                    color='white'
+                            />;
+                        }}
+                        onSubmit={async (data) => {
 
-                    const areas: RestaurantArea[] = props.areas ?? [];
-                    const item = areas?.find(a => a.id == data.areaId);
+                            const areas: RestaurantArea[] = props.areas ?? [];
+                            const item = areas?.find(a => a.id == data.areaId);
 
-                    if (!item) return;
+                            if (!item) return;
 
-                    if (props.id) {
-                        const table = item.findTable(props.id);
-                        if (!table) return;
+                            if (props.id) {
+                                const table = item.findTable(props.id);
+                                if (!table) return;
 
-                        table.updateDetails({
-                            number: table.number,
-                            areaId: data.areaId,
-                            capacity: parseInt(data.capacity),
-                            reservationDuration: {
-                                hours: parseInt(data.reservationDuration.hours),
-                                minutes: parseInt(data.reservationDuration.minutes)
-                            },
-                            schedule: data.schedule
-                        });
+                                table.updateDetails({
+                                    number: table.number,
+                                    areaId: data.areaId,
+                                    capacity: parseInt(data.capacity),
+                                    reservationDuration: {
+                                        hours: parseInt(data.reservationDuration.hours),
+                                        minutes: parseInt(data.reservationDuration.minutes)
+                                    },
+                                    schedule: data.schedule
+                                });
 
-                        item.updateTable(table);
+                                item.updateTable(table);
 
-                    } else {
-                        item.createTable(RestaurantTable.fromPrimitives({
-                            id: UuidUtils.persistenceUuid(),
-                            number: item.tables?.length + 1,
-                            areaId: data.areaId,
-                            capacity: parseInt(data.capacity),
-                            reservationDuration: {
-                                hours: parseInt(data.reservationDuration.hours),
-                                minutes: parseInt(data.reservationDuration.minutes)
-                            },
-                            schedule: data.schedule
-                        }));
-                    }
+                            } else {
+                                item.createTable(RestaurantTable.fromPrimitives({
+                                    id: UuidUtils.persistenceUuid(),
+                                    number: item.tables?.length + 1,
+                                    areaId: data.areaId,
+                                    capacity: parseInt(data.capacity),
+                                    reservationDuration: {
+                                        hours: parseInt(data.reservationDuration.hours),
+                                        minutes: parseInt(data.reservationDuration.minutes)
+                                    },
+                                    schedule: data.schedule
+                                }));
+                            }
 
-                    setUpdatingIndicator(true);
+                            setUpdatingIndicator(true);
 
-                    try {
+                            try {
 
-                        await update(item.id, item);
-
-                        props?.onSave?.();
-                        notify('Guardado exitosamente', 'success');
-                    } finally {
-                        setUpdatingIndicator(false);
-                    }
-
-                }}
-            />
-            {
-                !!props.id && (
-                    <Box
-                        borderTopWidth={1}
-                        borderColor={'greyLight'}
-                        mt={'m'}
-                        paddingVertical={'m'}
-                    >
-
-                        <ConfirmButton
-                            loading={updating}
-                            onConfirm={async () => {
-                                const item: RestaurantArea = props.area;
-                                item.deleteTable(props.id);
                                 await update(item.id, item);
-                                props?.onSave?.();
-                                notify('Mesa eliminada exitosamente', 'success');
-                            }}
-                        />
 
-                    </Box>
-                )
-            }
-        </Box>
+                                props?.onSave?.();
+                                notify('Guardado exitosamente', 'success');
+                            } finally {
+                                setUpdatingIndicator(false);
+                            }
+
+                        }}
+                />
+                {
+                        !!props.id && (
+                                <Box
+                                        borderTopWidth={1}
+                                        borderColor={'greyLight'}
+                                        mt={'m'}
+                                        paddingVertical={'m'}
+                                >
+
+                                    <ConfirmButton
+                                            loading={updating}
+                                            onConfirm={async () => {
+                                                const areas: RestaurantArea[] = props.areas ?? [];
+                                                const item = areas?.find(a => a.id == props.areaId);
+                                                if (!item) return;
+                                                item.deleteTable(props.id);
+                                                await update(item.id, item);
+                                                props?.onSave?.();
+                                                notify('Mesa eliminada exitosamente', 'success');
+                                            }}
+                                    />
+
+                                </Box>
+                        )
+                }
+            </Box>
     );
 }
 
@@ -311,79 +313,79 @@ function ConfirmButton({ onConfirm, ...rest }) {
     const [showConfirm, setShowConfirm] = useState(false);
 
     return (
-        <Box flexDirection={'row'}>
-            {
-                showConfirm ? (
-                    <>
-                        <Box
-                            borderRightWidth={1}
-                            mr={'m'}
-                            pr={'s'}
-                        >
+            <Box flexDirection={'row'}>
+                {
+                    showConfirm ? (
+                            <>
+                                <Box
+                                        borderRightWidth={1}
+                                        mr={'m'}
+                                        pr={'s'}
+                                >
+                                    <Button
+                                            mode={'text'}
+                                            icon={() => {
+                                                return (
+                                                        <Icon
+                                                                name={'close'}
+                                                                type={'ionicon'}
+                                                                color={'black'}
+                                                                numberSize={20}
+                                                        />
+                                                );
+                                            }}
+                                            titleColor={'black'}
+                                            title={'Cancelar'}
+                                            onPress={() => {
+                                                setShowConfirm(false);
+                                            }}
+                                    />
+                                </Box>
+                                <Box>
+                                    <Button
+                                            mode={'text'}
+                                            {...rest}
+                                            icon={() => {
+                                                return (
+                                                        <Icon
+                                                                name={'check'}
+                                                                type={'feather'}
+                                                                color={'dangerMain'}
+                                                                numberSize={20}
+                                                        />
+                                                );
+                                            }}
+                                            titleColor={'dangerMain'}
+                                            title={'Confirmar'}
+                                            onPress={() => {
+                                                onConfirm();
+                                            }}
+                                    />
+                                </Box>
+                            </>
+                    ) : (
                             <Button
-                                mode={'text'}
-                                icon={() => {
-                                    return (
-                                        <Icon
-                                            name={'close'}
-                                            type={'ionicon'}
-                                            color={'black'}
-                                            numberSize={20}
-                                        />
-                                    );
-                                }}
-                                titleColor={'black'}
-                                title={'Cancelar'}
-                                onPress={() => {
-                                    setShowConfirm(false);
-                                }}
+                                    mode={'text'}
+                                    icon={() => {
+                                        return (
+                                                <Icon
+                                                        name={'trash'}
+                                                        type={'feather'}
+                                                        color={'dangerMain'}
+                                                        numberSize={20}
+                                                />
+                                        );
+                                    }}
+                                    titleColor={'dangerMain'}
+                                    title={'Eliminar mesa'}
+                                    onPress={() => {
+                                        setShowConfirm(true);
+                                    }}
                             />
-                        </Box>
-                        <Box>
-                            <Button
-                                mode={'text'}
-                                {...rest}
-                                icon={() => {
-                                    return (
-                                        <Icon
-                                            name={'check'}
-                                            type={'feather'}
-                                            color={'dangerMain'}
-                                            numberSize={20}
-                                        />
-                                    );
-                                }}
-                                titleColor={'dangerMain'}
-                                title={'Confirmar'}
-                                onPress={() => {
-                                    onConfirm();
-                                }}
-                            />
-                        </Box>
-                    </>
-                ) : (
-                    <Button
-                        mode={'text'}
-                        icon={() => {
-                            return (
-                                <Icon
-                                    name={'trash'}
-                                    type={'feather'}
-                                    color={'dangerMain'}
-                                    numberSize={20}
-                                />
-                            );
-                        }}
-                        titleColor={'dangerMain'}
-                        title={'Eliminar mesa'}
-                        onPress={() => {
-                            setShowConfirm(true);
-                        }}
-                    />
-                )
+                    )
 
-            }
-        </Box>
+                }
+            </Box>
     );
 }
 
